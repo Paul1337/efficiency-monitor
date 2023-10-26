@@ -9,7 +9,7 @@ export interface IAccomplishDealParams {
     date?: Date;
 }
 
-export const accomplishDeal = (params: IAccomplishDealParams): AppThunk => {
+export const thunkAccomplishDeal = (params: IAccomplishDealParams): AppThunk => {
     const { deal, count = 1, date = new Date() } = params;
     date.setHours(0, 0, 0, 0);
 

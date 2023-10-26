@@ -3,7 +3,7 @@ import { IPlanItem } from '../../entities/PlanItem/model';
 import { plansActions } from '../slices/plans/plansSlice';
 import { AppThunk } from '../store';
 
-export const planItem = (planItem: IPlanItem): AppThunk => {
+export const thunkPlanItem = (planItem: IPlanItem): AppThunk => {
     return (dispatch, getState) => {
         dispatch(plansActions.addPlan(planItem));
         const plans = getState().plans.items;

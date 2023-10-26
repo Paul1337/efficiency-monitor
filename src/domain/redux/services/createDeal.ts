@@ -7,7 +7,7 @@ export interface IAddDealParams {
     deal: IDeal;
 }
 
-export const createDeal = (params: IAddDealParams): AppThunk => {
+export const thunkCreateDeal = (params: IAddDealParams): AppThunk => {
     const { deal } = params;
     return (dispatch, getState) => {
         const deals = getState().deals.deals;

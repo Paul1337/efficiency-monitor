@@ -1,14 +1,12 @@
 import { Action, ThunkAction, combineReducers, configureStore } from '@reduxjs/toolkit';
 import { dealsReducer } from '../slices/deals/dealsSlice';
 import { useDispatch } from 'react-redux';
-import { dashboardReducer } from '../slices/dashboard/dashboard';
 import { historyReducer } from '../slices/history/historySlice';
 import { plansReducer } from '../slices/plans/plansSlice';
 
 export const store = configureStore({
     reducer: combineReducers({
         deals: dealsReducer,
-        dashboard: dashboardReducer,
         history: historyReducer,
         plans: plansReducer,
     }),
