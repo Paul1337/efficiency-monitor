@@ -1,5 +1,3 @@
-export interface IPlanItemParams {
-    date: Date;
-}
+import { IPlanItem } from '../../entities/PlanItem/model';
 
-export const planItem = (params: IPlanItemParams) => {};
+export const planItem = (params: IPlanItem) => {};

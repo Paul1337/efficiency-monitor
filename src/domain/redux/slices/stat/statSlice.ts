@@ -1,10 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IStatSliceScheme } from './types';
 
-const initialState: IStatSliceScheme = {
-    plan: {},
-    current: {},
-};
+const initialState: IStatSliceScheme = {};
 
 const statSlice = createSlice({
     name: 'stat',
