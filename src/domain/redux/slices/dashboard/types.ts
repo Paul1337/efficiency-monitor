@@ -22,6 +22,6 @@ export interface ITotalInfo {
 }
 
 export interface IDashboardSliceScheme {
-    dailyInfo: IDailyInfo;
-    totalInfo: ITotalInfo;
+    dailyInfo?: IDailyInfo;
+    totalInfo?: ITotalInfo;
 }
