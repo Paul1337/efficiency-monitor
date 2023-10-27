@@ -6,7 +6,7 @@ const initialState: IPlansSliceScheme = {
     items: [],
 };
 
-const statSlice = createSlice({
+const plansSlice = createSlice({
     name: 'plans',
     initialState,
     reducers: {
@@ -19,5 +19,5 @@ const statSlice = createSlice({
     },
 });
 
-export const { actions: plansActions } = statSlice;
-export const { reducer: plansReducer } = statSlice;
+export const { actions: plansActions } = plansSlice;
+export const { reducer: plansReducer } = plansSlice;

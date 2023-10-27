@@ -1,18 +1,12 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../domain/redux/store';
+import { sameDay } from '../../../domain/shared/compareDates';
 
 export const DailyDashboard = () => {
     const history = useSelector((state: RootState) => state.history.items);
     const todayDate = new Date();
-    todayDate.setHours(0, 0, 0, 0);
-    const todayHistoryItem = history.find((item) => {
-        item.date.setHours(0, 0, 0, 0);
-        return todayDate.getTime() === item.date.getTime();
-    });
+    const todayHistoryItem = history.find((item) => sameDay(todayDate, item.date));
     const plans = useSelector((state: RootState) => state.plans.items);
-
-    console.log('history:', history);
-    console.log('plans:', plans);
 
     return (
         <div>

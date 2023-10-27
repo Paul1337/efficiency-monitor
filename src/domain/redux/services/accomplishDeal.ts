@@ -1,5 +1,6 @@
 import localStorageConfig from '../../config/localStorage/localStorageConfig';
 import { IDeal } from '../../entities/Deal/model';
+import { dealsActions } from '../slices/deals/dealsSlice';
 import { historyActions } from '../slices/history/historySlice';
 import { AppThunk } from '../store';
 
@@ -14,17 +15,8 @@ export const thunkAccomplishDeal = (params: IAccomplishDealParams): AppThunk => 
     date.setHours(0, 0, 0, 0);
 
     return (dispatch, getState) => {
+        dispatch(historyActions.accomplishDeal({ deal, count, date }));
         const history = getState().history.items;
-
-        const newHistory = history.map((item) => {
-            const itemDate = { ...item.date };
-            itemDate.setHours(0, 0, 0, 0);
-            if (itemDate.getTime() === date.getTime()) item.done[deal.name] += count;
-            return item;
-        });
-
-        localStorage.setItem(localStorageConfig.HistoryKey, JSON.stringify(newHistory));
-
-        dispatch(historyActions.setHistory(newHistory));
+        localStorage.setItem(localStorageConfig.HistoryKey, JSON.stringify(history));
     };
 };

@@ -4,6 +4,7 @@ import { IDeal } from '../../../entities/Deal/model';
 
 const initialState: IDealsSliceSchema = {
     deals: [],
+    addError: null,
 };
 
 const dealsSlice = createSlice({
@@ -12,6 +13,17 @@ const dealsSlice = createSlice({
     reducers: {
         setDeals(state: IDealsSliceSchema, action: PayloadAction<IDeal[]>) {
             state.deals = action.payload;
+        },
+        tryAddDeal(state: IDealsSliceSchema, action: PayloadAction<IDeal>) {
+            if (!state.deals.find((deal) => deal.name === action.payload.name)) {
+                state.deals.push(action.payload);
+                state.addError = null;
+            } else {
+                state.addError = `Deal with name ${action.payload.name} already exists`;
+            }
+        },
+        clearError(state: IDealsSliceSchema) {
+            state.addError = null;
         },
     },
 });

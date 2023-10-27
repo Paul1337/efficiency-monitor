@@ -7,5 +7,5 @@ export interface IDailyPlan {
 }
 
 export interface IPlanItem extends IDailyPlan {
-    date: Date;
+    date: string;
 }

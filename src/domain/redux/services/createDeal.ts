@@ -1,19 +1,18 @@
 import localStorageConfig from '../../config/localStorage/localStorageConfig';
-import { IDeal } from '../../entities/Deal/model';
 import { dealsActions } from '../slices/deals/dealsSlice';
 import { AppThunk } from '../store';
 
-export interface IAddDealParams {
-    deal: IDeal;
-}
+export const buildDeal = (dealName: string) => ({
+    name: dealName,
+});
 
-export const thunkCreateDeal = (params: IAddDealParams): AppThunk => {
-    const { deal } = params;
+export const thunkCreateDeal = (dealName: string): AppThunk => {
     return (dispatch, getState) => {
-        const deals = getState().deals.deals;
-        deals.push(deal);
-
-        localStorage.setItem(localStorageConfig.DealsKey, JSON.stringify(deals));
-        dispatch(dealsActions.setDeals(deals));
+        const newDeal = buildDeal(dealName);
+        dispatch(dealsActions.tryAddDeal(newDeal));
+        const { deals, addError } = getState().deals;
+        if (!addError) {
+            localStorage.setItem(localStorageConfig.DealsKey, JSON.stringify(deals));
+        }
     };
 };
