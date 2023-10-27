@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, FunctionComponent, ReactComponentElement, useState } from 'react';
 import { FormAccomplishDeal } from './FormAccomplishDeal/FormAccomplishDeal';
 import { FormCreateDeal } from './FormCreateDeal/FormCreateDeal';
 import { FormPlanItem } from './FormPlanItem/FormPlanItem';
@@ -11,16 +11,10 @@ enum EActions {
 
 const DefaultAction = EActions.Accomplish;
 
-interface IFormProps {
-    action: EActions;
-}
-
-const Form: FC<IFormProps> = (props) => {
-    const { action } = props;
-    if (action === EActions.Accomplish) return <FormAccomplishDeal />;
-    if (action === EActions.Create) return <FormCreateDeal />;
-    if (action === EActions.PlanItem) return <FormPlanItem />;
-    return <></>;
+const ActionToFormMap: Record<EActions, FunctionComponent> = {
+    [EActions.Accomplish]: FormAccomplishDeal,
+    [EActions.Create]: FormCreateDeal,
+    [EActions.PlanItem]: FormPlanItem,
 };
 
 export const ManagementPanel = () => {
@@ -29,6 +23,8 @@ export const ManagementPanel = () => {
     const handleActionSelect = (e: ChangeEvent<HTMLSelectElement>) => {
         setAction(e.target.value as EActions);
     };
+
+    const Form = ActionToFormMap[action];
 
     return (
         <div>
@@ -42,7 +38,7 @@ export const ManagementPanel = () => {
                     ))}
                 </select>
             </div>
-            <Form action={action} />
+            {<Form />}
         </div>
     );
 };

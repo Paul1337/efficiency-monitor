@@ -3,6 +3,7 @@ import { IDeal } from '../../../domain/entities/Deal/model';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../../domain/redux/store';
 import { thunkAccomplishDeal } from '../../../domain/redux/services/accomplishDeal';
+import { DealSelector } from '../DealSelector/DealSelector';
 
 export const FormAccomplishDeal = () => {
     const dispatch = useAppDispatch();
@@ -14,9 +15,7 @@ export const FormAccomplishDeal = () => {
         setDeal(deals[0]);
     }, [deals]);
 
-    const handleDealSelect = (e: ChangeEvent<HTMLSelectElement>) => {
-        setDeal(deals.find(({ name }) => name === e.target.value));
-    };
+    const handleDealSelect = (deal: IDeal) => setDeal(deal);
 
     const handleDealsCounterChange = (e: ChangeEvent<HTMLInputElement>) => {
         const count = Number(e.target.value);
@@ -34,13 +33,7 @@ export const FormAccomplishDeal = () => {
 
     return (
         <div>
-            <select onChange={handleDealSelect} defaultValue={deal?.name}>
-                {deals.map((deal, ind) => (
-                    <option key={deal.name + ind} value={deal.name}>
-                        {deal.name}
-                    </option>
-                ))}
-            </select>
+            {deal && <DealSelector onSelect={handleDealSelect} value={deal} />}
             <input type='number' value={dealsCount.toString()} onChange={handleDealsCounterChange} />
             <button onClick={handleAction}>Accomplish deal</button>
         </div>

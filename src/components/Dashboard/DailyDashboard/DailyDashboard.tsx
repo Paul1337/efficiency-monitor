@@ -6,7 +6,7 @@ export const DailyDashboard = () => {
     const history = useSelector((state: RootState) => state.history.items);
     const todayDate = new Date();
     const todayHistoryItem = history.find((item) => sameDay(todayDate, item.date));
-    const plans = useSelector((state: RootState) => state.plans.items);
+    // const plans = useSelector((state: RootState) => state.plans.items);
 
     return (
         <div>
