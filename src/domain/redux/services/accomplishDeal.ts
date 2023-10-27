@@ -7,12 +7,11 @@ import { AppThunk } from '../store';
 export interface IAccomplishDealParams {
     deal: IDeal;
     count?: number;
-    date?: Date;
+    date?: string;
 }
 
 export const thunkAccomplishDeal = (params: IAccomplishDealParams): AppThunk => {
-    const { deal, count = 1, date = new Date() } = params;
-    date.setHours(0, 0, 0, 0);
+    const { deal, count = 1, date = new Date().toString() } = params;
 
     return (dispatch, getState) => {
         dispatch(historyActions.accomplishDeal({ deal, count, date }));
