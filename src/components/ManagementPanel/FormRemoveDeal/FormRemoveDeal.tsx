@@ -1,8 +1,7 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IDeal } from '../../../domain/entities/Deal/model';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../../domain/redux/store';
-import { thunkAccomplishDeal } from '../../../domain/redux/services/accomplishDeal';
 import { DealSelector } from '../DealSelector/DealSelector';
 import { thunkRemoveDeal } from '../../../domain/redux/services/removeDeal';
 

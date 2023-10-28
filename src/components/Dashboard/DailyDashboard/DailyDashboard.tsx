@@ -21,7 +21,7 @@ export const DailyDashboard = () => {
         const done = todayHistoryItem?.done[cur.deal.name] ?? 0;
         return acc + Math.min(done, cur.count);
     }, 0);
-    const overallPlansPercent = (plansDone / allPlans) * 100;
+    const overallPlansPercent = allPlans === 0 ? 0 : (plansDone / allPlans) * 100;
 
     return (
         <div className={cls.ConcreteDashboard}>

@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { IPlansSliceScheme } from './types';
 import { IDailyPlan, IPlanItem } from '../../../entities/PlanItem/model';
+import { IDeal } from '../../../entities/Deal/model';
 
 const initialState: IPlansSliceScheme = {
     longPlans: [],
@@ -21,10 +22,22 @@ const plansSlice = createSlice({
             state.dailyPlans = action.payload.dailyPlans ?? [];
         },
         addLongPlan(state: IPlansSliceScheme, action: PayloadAction<IPlanItem>) {
-            state.longPlans.push(action.payload);
+            const sameDeal = (plan: IPlanItem) => plan.deal.name === action.payload.deal.name;
+            if (!state.longPlans.find(sameDeal)) {
+                state.longPlans.push(action.payload);
+            }
         },
         addDailyPlan(state: IPlansSliceScheme, action: PayloadAction<IDailyPlan>) {
-            state.dailyPlans.push(action.payload);
+            const sameDeal = (plan: IDailyPlan) => plan.deal.name === action.payload.deal.name;
+            if (!state.dailyPlans.find(sameDeal)) {
+                state.dailyPlans.push(action.payload);
+            }
+        },
+        removeDailyPlanByDeal(state: IPlansSliceScheme, action: PayloadAction<IDeal>) {
+            state.dailyPlans = state.dailyPlans.filter((plan) => plan.deal.name !== action.payload.name);
+        },
+        removeLongPlanByDeal(state: IPlansSliceScheme, action: PayloadAction<IDeal>) {
+            state.longPlans = state.longPlans.filter((plan) => plan.deal.name !== action.payload.name);
         },
     },
 });

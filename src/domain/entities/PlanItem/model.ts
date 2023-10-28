@@ -12,4 +12,5 @@ export interface IDailyPlan {
 
 export interface IPlanItem extends IDailyPlan {
     date: string;
+    startDate: string;
 }

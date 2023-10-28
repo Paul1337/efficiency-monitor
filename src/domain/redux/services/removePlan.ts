@@ -1,18 +1,18 @@
-import { IDailyPlan, IPlanItem } from '../../entities/PlanItem/model';
+import { IDeal } from '../../entities/Deal/model';
 import { updatePlansDataInStorage } from '../data/plans';
 import { plansActions } from '../slices/plans/plansSlice';
 import { AppThunk } from '../store';
 
-export const thunkPlanLongDeal = (plan: IPlanItem): AppThunk => {
+export const thunkRemoveDailyPlan = (deal: IDeal): AppThunk => {
     return (dispatch, getState) => {
-        dispatch(plansActions.addLongPlan(plan));
+        dispatch(plansActions.removeDailyPlanByDeal(deal));
         updatePlansDataInStorage(getState().plans);
     };
 };
 
-export const thunkPlanDailyDeal = (plan: IDailyPlan): AppThunk => {
+export const thunkRemoveLongPlan = (deal: IDeal): AppThunk => {
     return (dispatch, getState) => {
-        dispatch(plansActions.addDailyPlan(plan));
+        dispatch(plansActions.removeLongPlanByDeal(deal));
         updatePlansDataInStorage(getState().plans);
     };
 };

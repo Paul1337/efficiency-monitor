@@ -5,20 +5,15 @@ import { IDeal } from '../../../domain/entities/Deal/model';
 import { DealSelector } from '../DealSelector/DealSelector';
 import { EPlanType } from '../../../domain/entities/PlanItem/model';
 import { thunkPlanDailyDeal, thunkPlanLongDeal } from '../../../domain/redux/services/planItem';
-
-const Defaults = {
-    PlanCount: 1,
-};
+import { thunkRemoveDailyPlan, thunkRemoveLongPlan } from '../../../domain/redux/services/removePlan';
 
 const PlanTypeTexts: Record<EPlanType, string> = {
     [EPlanType.Daily]: 'Daily',
     [EPlanType.Long]: 'Long',
 };
 
-export const FormPlanItem = () => {
+export const FormRemovePlan = () => {
     const dispatch = useAppDispatch();
-    const [planDate, setDate] = useState('');
-    const [planCount, setPlanCount] = useState(Defaults.PlanCount);
     const deals = useSelector((state: RootState) => state.deals.deals);
     const [deal, setDeal] = useState<IDeal | undefined>(deals[0]);
     const [planType, setPlanType] = useState<EPlanType>(EPlanType.Long);
@@ -28,27 +23,17 @@ export const FormPlanItem = () => {
     }, [deals]);
 
     const handleDealSelect = (deal: IDeal) => setDeal(deal);
-    const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => setDate(e.target.value);
-    const handlePlanCountChange = (e: ChangeEvent<HTMLInputElement>) =>
-        setPlanCount(Number(e.target.value));
 
     const handleAction = () => {
         if (!deal) return;
 
         switch (planType) {
             case EPlanType.Daily:
-                dispatch(thunkPlanDailyDeal({ deal, count: planCount }));
+                dispatch(thunkRemoveDailyPlan(deal));
                 break;
 
             case EPlanType.Long:
-                dispatch(
-                    thunkPlanLongDeal({
-                        deal,
-                        count: planCount,
-                        date: planDate,
-                        startDate: new Date().toString(),
-                    })
-                );
+                dispatch(thunkRemoveLongPlan(deal));
                 break;
         }
     };
@@ -65,12 +50,8 @@ export const FormPlanItem = () => {
                     </option>
                 ))}
             </select>
-            {planType == EPlanType.Long && (
-                <input type='date' value={planDate} onChange={handleDateChange} />
-            )}
             {deal && <DealSelector onSelect={handleDealSelect} value={deal} />}
-            <input type='number' value={planCount.toString()} onChange={handlePlanCountChange} />
-            <button onClick={handleAction}>Plan item</button>
+            <button onClick={handleAction}>Remove item</button>
         </div>
     );
 };

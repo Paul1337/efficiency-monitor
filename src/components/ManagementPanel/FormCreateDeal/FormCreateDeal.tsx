@@ -1,6 +1,5 @@
 import { ChangeEvent, useState } from 'react';
 import { thunkCreateDeal } from '../../../domain/redux/services/createDeal';
-import { isValidDealName } from './lib';
 import { RootState, useAppDispatch } from '../../../domain/redux/store';
 import { useSelector } from 'react-redux';
 
@@ -14,9 +13,7 @@ export const FormCreateDeal = () => {
     };
 
     const handleAction = () => {
-        if (isValidDealName(dealName)) {
-            dispatch(thunkCreateDeal(dealName));
-        }
+        dispatch(thunkCreateDeal(dealName));
     };
 
     return (

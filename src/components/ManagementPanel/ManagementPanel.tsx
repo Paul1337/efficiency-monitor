@@ -4,12 +4,14 @@ import { FormCreateDeal } from './FormCreateDeal/FormCreateDeal';
 import { FormPlanItem } from './FormPlanItem/FormPlanItem';
 import cls from './ManagementPanel.module.css';
 import { FormRemoveDeal } from './FormRemoveDeal/FormRemoveDeal';
+import { FormRemovePlan } from './FormRemovePlan/FormRemovePlan';
 
 enum EActions {
     Accomplish = 'Accomplish deal',
     Create = 'Create new deal',
     RemoveDeal = 'Remove deal',
-    PlanItem = 'Plan new item',
+    PlanItem = 'Plan deal',
+    RemovePlan = 'Remove Plan',
 }
 
 const DefaultAction = EActions.Accomplish;
@@ -19,6 +21,7 @@ const ActionToFormMap: Record<EActions, FunctionComponent> = {
     [EActions.Create]: FormCreateDeal,
     [EActions.PlanItem]: FormPlanItem,
     [EActions.RemoveDeal]: FormRemoveDeal,
+    [EActions.RemovePlan]: FormRemovePlan,
 };
 
 export const ManagementPanel = () => {
