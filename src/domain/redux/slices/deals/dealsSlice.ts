@@ -25,6 +25,9 @@ const dealsSlice = createSlice({
         clearError(state: IDealsSliceSchema) {
             state.addError = null;
         },
+        removeDeal(state: IDealsSliceSchema, action: PayloadAction<IDeal>) {
+            state.deals = state.deals.filter((deal) => deal.name !== action.payload.name);
+        },
     },
 });
 

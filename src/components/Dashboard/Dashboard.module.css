@@ -1,0 +1,68 @@
+.Dashboard {
+    border: 1px solid black;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+.dashboardsCont {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.ConcreteDashboard {
+    border: 1px solid black;
+    padding: 4px;
+    border-radius: 6px;
+    min-width: 300px;
+}
+
+.item {
+    font-size: 22px;
+    margin: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.itemValue {
+    font-weight: 700;
+    margin-right: 5px;
+    color: gray;
+}
+
+.itemValue.done {
+    color: darkgreen;
+}
+
+.listView {
+    overflow: auto;
+    max-height: 300px;
+}
+
+.itemPlannedValue {
+    font-size: 22px;
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+.itemPlannedValuePercent {
+    font-size: 18px;
+}
+
+.heading {
+    font-size: 26px;
+}
+
+.sectionHeading {
+    font-size: 20px;
+    color: gray;
+    border-bottom: 1px solid gray;
+}
+
+.overAllPercent {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 6px;
+}

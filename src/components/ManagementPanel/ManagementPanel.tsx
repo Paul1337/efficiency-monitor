@@ -2,10 +2,13 @@ import { ChangeEvent, FC, FunctionComponent, ReactComponentElement, useState } f
 import { FormAccomplishDeal } from './FormAccomplishDeal/FormAccomplishDeal';
 import { FormCreateDeal } from './FormCreateDeal/FormCreateDeal';
 import { FormPlanItem } from './FormPlanItem/FormPlanItem';
+import cls from './ManagementPanel.module.css';
+import { FormRemoveDeal } from './FormRemoveDeal/FormRemoveDeal';
 
 enum EActions {
     Accomplish = 'Accomplish deal',
     Create = 'Create new deal',
+    RemoveDeal = 'Remove deal',
     PlanItem = 'Plan new item',
 }
 
@@ -15,6 +18,7 @@ const ActionToFormMap: Record<EActions, FunctionComponent> = {
     [EActions.Accomplish]: FormAccomplishDeal,
     [EActions.Create]: FormCreateDeal,
     [EActions.PlanItem]: FormPlanItem,
+    [EActions.RemoveDeal]: FormRemoveDeal,
 };
 
 export const ManagementPanel = () => {
@@ -27,10 +31,15 @@ export const ManagementPanel = () => {
     const Form = ActionToFormMap[action];
 
     return (
-        <div>
-            <div>
-                <span>Select action </span>
-                <select onChange={handleActionSelect} defaultValue={action}>
+        <div className={cls.ManagementPanel}>
+            <h1>Management</h1>
+            <div className={cls.actionSelectorCont}>
+                <span className={cls.selectAction}>Select action</span>
+                <select
+                    className={cls.actionSelector}
+                    onChange={handleActionSelect}
+                    defaultValue={action}
+                >
                     {Object.values(EActions).map((el, ind) => (
                         <option key={el + ind} value={el}>
                             {el}
@@ -38,7 +47,7 @@ export const ManagementPanel = () => {
                     ))}
                 </select>
             </div>
-            {<Form />}
+            <div className={cls.ManagementFormCont}>{<Form />}</div>
         </div>
     );
 };

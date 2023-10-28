@@ -1,12 +1,23 @@
 import localStorageConfig from '../../config/localStorage/localStorageConfig';
-import { IPlanItem } from '../../entities/PlanItem/model';
+import { IDailyPlan, IPlanItem } from '../../entities/PlanItem/model';
 import { plansActions } from '../slices/plans/plansSlice';
+import { IPlansSliceScheme } from '../slices/plans/types';
 import { AppThunk } from '../store';
 
-export const thunkPlanItem = (planItem: IPlanItem): AppThunk => {
+const updatePlansDataInStorage = (plans: IPlansSliceScheme) => {
+    localStorage.setItem(localStorageConfig.PlansKey, JSON.stringify(plans));
+};
+
+export const thunkPlanLongDeal = (plan: IPlanItem): AppThunk => {
     return (dispatch, getState) => {
-        dispatch(plansActions.addPlan(planItem));
-        const plans = getState().plans.items.map((item) => ({ ...item, date: item.date.toString() }));
-        localStorage.setItem(localStorageConfig.PlansKey, JSON.stringify(plans));
+        dispatch(plansActions.addLongPlan(plan));
+        updatePlansDataInStorage(getState().plans);
+    };
+};
+
+export const thunkPlanDailyDeal = (plan: IDailyPlan): AppThunk => {
+    return (dispatch, getState) => {
+        dispatch(plansActions.addDailyPlan(plan));
+        updatePlansDataInStorage(getState().plans);
     };
 };

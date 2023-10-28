@@ -1,20 +1,30 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { IPlansSliceScheme } from './types';
-import { IPlanItem } from '../../../entities/PlanItem/model';
+import { IDailyPlan, IPlanItem } from '../../../entities/PlanItem/model';
 
 const initialState: IPlansSliceScheme = {
-    items: [],
+    longPlans: [],
+    dailyPlans: [],
 };
+
+export interface ISetDataPayload {
+    longPlans: IPlansSliceScheme['longPlans'];
+    dailyPlans: IPlansSliceScheme['dailyPlans'];
+}
 
 const plansSlice = createSlice({
     name: 'plans',
     initialState,
     reducers: {
-        setPlans(state: IPlansSliceScheme, action: PayloadAction<IPlanItem[]>) {
-            state.items = action.payload;
+        setData(state: IPlansSliceScheme, action: PayloadAction<ISetDataPayload>) {
+            state.longPlans = action.payload.longPlans ?? [];
+            state.dailyPlans = action.payload.dailyPlans ?? [];
         },
-        addPlan(state: IPlansSliceScheme, action: PayloadAction<IPlanItem>) {
-            state.items.push(action.payload);
+        addLongPlan(state: IPlansSliceScheme, action: PayloadAction<IPlanItem>) {
+            state.longPlans.push(action.payload);
+        },
+        addDailyPlan(state: IPlansSliceScheme, action: PayloadAction<IDailyPlan>) {
+            state.dailyPlans.push(action.payload);
         },
     },
 });

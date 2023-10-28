@@ -13,6 +13,6 @@ export const thunkLoadData = (): AppThunk => {
         if (historyStr) dispatch(historyActions.setHistory(JSON.parse(historyStr)));
 
         const plansStr = localStorage.getItem(localStorageConfig.PlansKey);
-        if (plansStr) dispatch(plansActions.setPlans(JSON.parse(plansStr)));
+        if (plansStr) dispatch(plansActions.setData(JSON.parse(plansStr)));
     };
 };

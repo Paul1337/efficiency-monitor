@@ -1,7 +1,11 @@
 import { IDeal } from '../Deal/model';
 
+export enum EPlanType {
+    Daily,
+    Long,
+}
+
 export interface IDailyPlan {
-    name: string;
     deal: IDeal;
     count: number;
 }

@@ -1,0 +1,27 @@
+.ManagementPanel {
+    margin: 10px auto;
+    text-align: center;
+    border: 1px solid black;
+    padding: 6px;
+    border-radius: 6px;
+}
+
+.actionSelectorCont {
+    margin: 6px;
+    padding: 4px;
+    background-color: lightgray;
+}
+
+.actionSelector {
+}
+
+.selectAction {
+    font-weight: 700;
+    margin-right: 10px;
+}
+
+.ManagementFormCont {
+    margin: 6px;
+    padding: 4px;
+    background-color: lightgray;
+}
