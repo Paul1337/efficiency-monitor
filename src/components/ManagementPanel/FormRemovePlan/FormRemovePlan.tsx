@@ -1,12 +1,12 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RootState, useAppDispatch } from '../../../domain/redux/store';
 import { useSelector } from 'react-redux';
 import { IDeal } from '../../../domain/entities/Deal/model';
 import { DealSelector } from '../DealSelector/DealSelector';
 import { EPlanType } from '../../../domain/entities/PlanItem/model';
-import { thunkPlanDailyDeal, thunkPlanLongDeal } from '../../../domain/redux/services/planItem';
 import { thunkRemoveDailyPlan, thunkRemoveLongPlan } from '../../../domain/redux/services/removePlan';
-import { Button, Select } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
+import { Select } from 'chakra-react-select';
 
 const PlanTypeTexts: Record<EPlanType, string> = {
     [EPlanType.Daily]: 'Daily',
@@ -26,7 +26,9 @@ export const FormRemovePlan = () => {
     const handleDealSelect = (deal: IDeal) => setDeal(deal);
 
     const handleAction = () => {
+        console.log('deal', deal);
         if (!deal) return;
+        console.log('removing plan type', planType);
 
         switch (planType) {
             case EPlanType.Daily:
@@ -39,18 +41,17 @@ export const FormRemovePlan = () => {
         }
     };
 
-    const handlePlanTypeChange = (e: ChangeEvent<HTMLSelectElement>) =>
-        setPlanType(Number(e.target.value) as EPlanType);
+    const handlePlanTypeChange = (e: any) => setPlanType(e.value);
 
+    console.log(Object.values(PlanTypeTexts).map(([value, text]) => ({ label: text, value })));
     return (
         <div>
-            <Select onChange={handlePlanTypeChange} defaultValue={planType}>
-                {Object.entries(PlanTypeTexts).map(([value, text]) => (
-                    <option key={value} value={value}>
-                        {text}
-                    </option>
-                ))}
-            </Select>
+            <Select
+                onChange={handlePlanTypeChange}
+                // defaultValue={{ value: planType, label: PlanTypeTexts[planType] }}
+                options={Object.values(PlanTypeTexts).map(([value, text]) => ({ label: text, value }))}
+            />
+
             {deal && <DealSelector onSelect={handleDealSelect} value={deal} />}
             <Button onClick={handleAction}>Remove item</Button>
         </div>

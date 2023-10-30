@@ -9,6 +9,8 @@ interface IDealSelectorProps {
     value: IDeal;
 }
 
+const mapDealToSelectOption = (deal: IDeal) => ({ label: deal.name, value: deal.name });
+
 export const DealSelector: FC<IDealSelectorProps> = (props) => {
     const { onSelect, value } = props;
 
@@ -23,9 +25,10 @@ export const DealSelector: FC<IDealSelectorProps> = (props) => {
     return (
         <div>
             <Select
+                // styles={{ ma}}
                 onChange={handleDealSelect}
-                defaultValue={{ label: value.name, value: value.name }}
-                options={deals.map((deal) => ({ label: deal.name, value: deal.name }))}
+                value={{ label: value.name, value: value.name }}
+                options={deals.map(mapDealToSelectOption)}
             />
         </div>
     );

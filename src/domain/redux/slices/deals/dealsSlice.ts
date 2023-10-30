@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { IDealsSliceSchema } from './types';
 import { IDeal } from '../../../entities/Deal/model';
+import { isValidDealName } from './lib/validateDeal';
 
 const initialState: IDealsSliceSchema = {
     deals: [],
@@ -15,7 +16,13 @@ const dealsSlice = createSlice({
             state.deals = action.payload;
         },
         tryAddDeal(state: IDealsSliceSchema, action: PayloadAction<IDeal>) {
-            if (!state.deals.find((deal) => deal.name === action.payload.name)) {
+            if (!isValidDealName(action.payload.name)) {
+                state.addError = 'Deal name is not valid';
+                return state;
+            }
+
+            const dealWithSameName = state.deals.find((deal) => deal.name === action.payload.name);
+            if (!dealWithSameName) {
                 state.deals.push(action.payload);
                 state.addError = null;
             } else {

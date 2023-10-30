@@ -31,10 +31,10 @@ export const TotalDashboard = () => {
                     const done = calculatePlanDoneCount(plan);
                     return (
                         <div className={cls.item} key={plan.deal.name + ind}>
-                            <span>
+                            <span className={cls.itemDescr}>
                                 {plan.deal.name} ({plan.date}):
                             </span>
-                            <span>
+                            <span className={''}>
                                 <span
                                     className={classNames(cls.itemValue, done >= plan.count && cls.done)}
                                 >

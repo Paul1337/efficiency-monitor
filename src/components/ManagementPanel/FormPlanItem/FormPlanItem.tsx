@@ -8,6 +8,7 @@ import { thunkPlanDailyDeal, thunkPlanLongDeal } from '../../../domain/redux/ser
 import { Button, Input } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
 import { SingleDatepicker } from 'chakra-dayzed-datepicker';
+import { weekdays } from './lib/weekdays';
 
 const Defaults = {
     PlanCount: 1,
@@ -20,6 +21,14 @@ const PlanTypeTexts: Record<EPlanType, string> = {
 
 const DefaultPlanType = EPlanType.Long;
 
+const WeekdaysSelectOptions = weekdays.map((day) => ({ label: day, value: day }));
+const PlanTypeSelectOptions = Object.values(EPlanType)
+    .filter((val) => !isNaN(Number(val)))
+    .map((value) => ({
+        value: value as EPlanType,
+        label: PlanTypeTexts[value as EPlanType],
+    }));
+
 export const FormPlanItem = () => {
     const dispatch = useAppDispatch();
     const [planDate, setDate] = useState<Date>(new Date());
@@ -27,6 +36,7 @@ export const FormPlanItem = () => {
     const deals = useSelector((state: RootState) => state.deals.deals);
     const [deal, setDeal] = useState<IDeal | undefined>(deals[0]);
     const [planType, setPlanType] = useState<EPlanType>(DefaultPlanType);
+    const [weekends, setWeekends] = useState<Array<number>>([]);
 
     useEffect(() => {
         setDeal(deals[0]);
@@ -65,18 +75,35 @@ export const FormPlanItem = () => {
             <Select
                 onChange={handlePlanTypeChange}
                 defaultValue={{ value: planType, label: PlanTypeTexts[planType] }}
-                options={Object.values(EPlanType).map((value) => ({
-                    value: value as EPlanType,
-                    label: PlanTypeTexts[value as EPlanType],
-                }))}
+                options={PlanTypeSelectOptions}
             />
+            {planType === EPlanType.Daily && (
+                <>
+                    Выходные
+                    <Select
+                        isMulti={true}
+                        onChange={(weekends) =>
+                            setWeekends(weekends.map((w) => weekdays.indexOf(w.value)))
+                        }
+                        // defaultValue={[]}
+                        options={WeekdaysSelectOptions}
+                    />
+                </>
+            )}
+
             {planType == EPlanType.Long && (
-                // <Input type='date' value={planDate} onChange={handleDateChange} />
                 <SingleDatepicker date={planDate} onDateChange={(newDate) => setDate(newDate)} />
             )}
             {deal && <DealSelector onSelect={handleDealSelect} value={deal} />}
-            <Input type='number' value={planCount.toString()} onChange={handlePlanCountChange} />
-            <Button onClick={handleAction}>Plan item</Button>
+            <Input
+                marginY={2}
+                type='number'
+                value={planCount.toString()}
+                onChange={handlePlanCountChange}
+            />
+            <Button marginY={2} onClick={handleAction}>
+                Plan item
+            </Button>
         </div>
     );
 };

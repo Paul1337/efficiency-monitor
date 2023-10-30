@@ -40,13 +40,14 @@ export const FormAccomplishDeal = () => {
         <div>
             {deal && <DealSelector onSelect={handleDealSelect} value={deal} />}
             <Input
-                m={2}
+                marginTop={2}
+                marginRight={2}
                 width={'fit-content'}
                 type='number'
                 value={dealsCount.toString()}
                 onChange={handleDealsCounterChange}
             />
-            <Button m={2} onClick={handleAction}>
+            <Button marginY={2} onClick={handleAction}>
                 Accomplish deal
             </Button>
         </div>

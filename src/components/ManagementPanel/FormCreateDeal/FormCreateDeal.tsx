@@ -15,12 +15,15 @@ export const FormCreateDeal = () => {
 
     const handleAction = () => {
         dispatch(thunkCreateDeal(dealName));
+        setDealName('');
     };
 
     return (
         <div>
             <Input type='text' value={dealName} onChange={handleDealNameChange} />
-            <Button onClick={handleAction}>Create deal</Button>
+            <Button marginTop={2} onClick={handleAction}>
+                Create deal
+            </Button>
             {addError && <span>{addError}</span>}
         </div>
     );

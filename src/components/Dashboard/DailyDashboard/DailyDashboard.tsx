@@ -32,8 +32,8 @@ export const DailyDashboard = () => {
                     const done = todayHistoryItem?.done[dailyPlan.deal.name] ?? 0;
                     return (
                         <div className={cls.item} key={dailyPlan.deal.name + ind}>
-                            {dailyPlan.deal.name}:
-                            <span>
+                            <span className={cls.itemDescr}>{dailyPlan.deal.name}:</span>
+                            <span className={cls.itemInfo}>
                                 <span
                                     className={classNames(
                                         cls.itemValue,

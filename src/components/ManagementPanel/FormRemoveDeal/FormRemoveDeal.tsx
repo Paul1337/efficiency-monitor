@@ -20,6 +20,7 @@ export const FormRemoveDeal = () => {
     const handleAction = () => {
         if (!deal) return;
         dispatch(thunkRemoveDeal(deal));
+        setDeal(deals[0]);
     };
 
     return (
