@@ -3,6 +3,7 @@ import { RootState } from '../../../domain/redux/store';
 import { sameDay } from '../../../domain/shared/compareDates';
 import cls from '../Dashboard.module.css';
 import classNames from 'classnames';
+import { BaseDashboard } from '../BaseDashboard/BaseDashboard';
 
 export const DailyDashboard = () => {
     const history = useSelector((state: RootState) => state.history.items);
@@ -24,8 +25,7 @@ export const DailyDashboard = () => {
     const overallPlansPercent = allPlans === 0 ? 0 : (plansDone / allPlans) * 100;
 
     return (
-        <div className={cls.ConcreteDashboard}>
-            <h1 className={cls.heading}>Daily dashboard</h1>
+        <BaseDashboard title='Daily dashboard'>
             <div className={cls.sectionHeading}>Today plans:</div>
             <div className={cls.listView}>
                 {dailyPlans.map((dailyPlan, ind) => {
@@ -70,6 +70,6 @@ export const DailyDashboard = () => {
                     <div className={cls.item}>no deals</div>
                 )}
             </div>
-        </div>
+        </BaseDashboard>
     );
 };

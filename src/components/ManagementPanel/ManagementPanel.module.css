@@ -9,7 +9,7 @@
 .actionSelectorCont {
     margin: 6px;
     padding: 4px;
-    background-color: lightgray;
+    /* background-color: lightgray; */
 }
 
 .actionSelector {
@@ -23,5 +23,5 @@
 .ManagementFormCont {
     margin: 6px;
     padding: 4px;
-    background-color: lightgray;
+    /* background-color: lightgray; */
 }

@@ -5,6 +5,9 @@ import { IDeal } from '../../../domain/entities/Deal/model';
 import { DealSelector } from '../DealSelector/DealSelector';
 import { EPlanType } from '../../../domain/entities/PlanItem/model';
 import { thunkPlanDailyDeal, thunkPlanLongDeal } from '../../../domain/redux/services/planItem';
+import { Button, Input } from '@chakra-ui/react';
+import { Select } from 'chakra-react-select';
+import { SingleDatepicker } from 'chakra-dayzed-datepicker';
 
 const Defaults = {
     PlanCount: 1,
@@ -15,20 +18,22 @@ const PlanTypeTexts: Record<EPlanType, string> = {
     [EPlanType.Long]: 'Long',
 };
 
+const DefaultPlanType = EPlanType.Long;
+
 export const FormPlanItem = () => {
     const dispatch = useAppDispatch();
-    const [planDate, setDate] = useState('');
+    const [planDate, setDate] = useState<Date>(new Date());
     const [planCount, setPlanCount] = useState(Defaults.PlanCount);
     const deals = useSelector((state: RootState) => state.deals.deals);
     const [deal, setDeal] = useState<IDeal | undefined>(deals[0]);
-    const [planType, setPlanType] = useState<EPlanType>(EPlanType.Long);
+    const [planType, setPlanType] = useState<EPlanType>(DefaultPlanType);
 
     useEffect(() => {
         setDeal(deals[0]);
     }, [deals]);
 
     const handleDealSelect = (deal: IDeal) => setDeal(deal);
-    const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => setDate(e.target.value);
+    // const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => setDate(e.target.value);
     const handlePlanCountChange = (e: ChangeEvent<HTMLInputElement>) =>
         setPlanCount(Number(e.target.value));
 
@@ -45,7 +50,7 @@ export const FormPlanItem = () => {
                     thunkPlanLongDeal({
                         deal,
                         count: planCount,
-                        date: planDate,
+                        date: planDate.toString(),
                         startDate: new Date().toString(),
                     })
                 );
@@ -53,24 +58,25 @@ export const FormPlanItem = () => {
         }
     };
 
-    const handlePlanTypeChange = (e: ChangeEvent<HTMLSelectElement>) =>
-        setPlanType(Number(e.target.value) as EPlanType);
+    const handlePlanTypeChange = (e: any) => setPlanType(e.value);
 
     return (
         <div>
-            <select onChange={handlePlanTypeChange} defaultValue={planType}>
-                {Object.entries(PlanTypeTexts).map(([value, text]) => (
-                    <option key={value} value={value}>
-                        {text}
-                    </option>
-                ))}
-            </select>
+            <Select
+                onChange={handlePlanTypeChange}
+                defaultValue={{ value: planType, label: PlanTypeTexts[planType] }}
+                options={Object.values(EPlanType).map((value) => ({
+                    value: value as EPlanType,
+                    label: PlanTypeTexts[value as EPlanType],
+                }))}
+            />
             {planType == EPlanType.Long && (
-                <input type='date' value={planDate} onChange={handleDateChange} />
+                // <Input type='date' value={planDate} onChange={handleDateChange} />
+                <SingleDatepicker date={planDate} onDateChange={(newDate) => setDate(newDate)} />
             )}
             {deal && <DealSelector onSelect={handleDealSelect} value={deal} />}
-            <input type='number' value={planCount.toString()} onChange={handlePlanCountChange} />
-            <button onClick={handleAction}>Plan item</button>
+            <Input type='number' value={planCount.toString()} onChange={handlePlanCountChange} />
+            <Button onClick={handleAction}>Plan item</Button>
         </div>
     );
 };

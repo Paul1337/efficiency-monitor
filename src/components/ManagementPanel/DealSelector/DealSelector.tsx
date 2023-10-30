@@ -2,6 +2,7 @@ import { ChangeEvent, FC } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../domain/redux/store';
 import { IDeal } from '../../../domain/entities/Deal/model';
+import { Select } from 'chakra-react-select';
 
 interface IDealSelectorProps {
     onSelect: (deal: IDeal) => void;
@@ -13,20 +14,19 @@ export const DealSelector: FC<IDealSelectorProps> = (props) => {
 
     const deals = useSelector((state: RootState) => state.deals.deals);
 
-    const handleDealSelect = (e: ChangeEvent<HTMLSelectElement>) => {
-        const newSelectedDeal = deals.find(({ name }) => name === e.target.value) as IDeal;
+    const handleDealSelect = (e: any) => {
+        const value = e.value;
+        const newSelectedDeal = deals.find(({ name }) => name === value) as IDeal;
         onSelect(newSelectedDeal);
     };
 
     return (
         <div>
-            <select onChange={handleDealSelect} defaultValue={value.name}>
-                {deals.map((deal, ind) => (
-                    <option key={deal.name + ind} value={deal.name}>
-                        {deal.name}
-                    </option>
-                ))}
-            </select>
+            <Select
+                onChange={handleDealSelect}
+                defaultValue={{ label: value.name, value: value.name }}
+                options={deals.map((deal) => ({ label: deal.name, value: deal.name }))}
+            />
         </div>
     );
 };

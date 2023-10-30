@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { thunkCreateDeal } from '../../../domain/redux/services/createDeal';
 import { RootState, useAppDispatch } from '../../../domain/redux/store';
 import { useSelector } from 'react-redux';
+import { Button, Input } from '@chakra-ui/react';
 
 export const FormCreateDeal = () => {
     const dispatch = useAppDispatch();
@@ -18,8 +19,8 @@ export const FormCreateDeal = () => {
 
     return (
         <div>
-            <input type='text' value={dealName} onChange={handleDealNameChange} />
-            <button onClick={handleAction}>Create deal</button>
+            <Input type='text' value={dealName} onChange={handleDealNameChange} />
+            <Button onClick={handleAction}>Create deal</Button>
             {addError && <span>{addError}</span>}
         </div>
     );

@@ -5,6 +5,7 @@ import { RootState } from '../../../domain/redux/store';
 import { compareDays } from '../../../domain/shared/compareDates';
 import classNames from 'classnames';
 import { IPlanItem } from '../../../domain/entities/PlanItem/model';
+import { BaseDashboard } from '../BaseDashboard/BaseDashboard';
 
 export const TotalDashboard = () => {
     const history = useSelector((state: RootState) => state.history.items);
@@ -24,39 +25,33 @@ export const TotalDashboard = () => {
     };
 
     return (
-        <div className={cls.ConcreteDashboard}>
-            <h1 className={cls.heading}>Total dashboard</h1>
-            {
-                <div className={cls.listView}>
-                    {plansInFuture.map((plan, ind) => {
-                        const done = calculatePlanDoneCount(plan);
-                        return (
-                            <div className={cls.item} key={plan.deal.name + ind}>
-                                <span>
-                                    {plan.deal.name} ({plan.date}):
+        <BaseDashboard title={'Total dashboard'}>
+            <div className={cls.listView}>
+                {plansInFuture.map((plan, ind) => {
+                    const done = calculatePlanDoneCount(plan);
+                    return (
+                        <div className={cls.item} key={plan.deal.name + ind}>
+                            <span>
+                                {plan.deal.name} ({plan.date}):
+                            </span>
+                            <span>
+                                <span
+                                    className={classNames(cls.itemValue, done >= plan.count && cls.done)}
+                                >
+                                    {done}
                                 </span>
-                                <span>
-                                    <span
-                                        className={classNames(
-                                            cls.itemValue,
-                                            done >= plan.count && cls.done
-                                        )}
-                                    >
-                                        {done}
-                                    </span>
-                                    /
-                                    <span className={cls.itemPlannedValue}>
-                                        {plan.count}{' '}
-                                        <span className={cls.itemPlannedValuePercent}>
-                                            ({((done / plan.count) * 100).toFixed(0)}%)
-                                        </span>
+                                /
+                                <span className={cls.itemPlannedValue}>
+                                    {plan.count}{' '}
+                                    <span className={cls.itemPlannedValuePercent}>
+                                        ({((done / plan.count) * 100).toFixed(0)}%)
                                     </span>
                                 </span>
-                            </div>
-                        );
-                    })}
-                </div>
-            }
-        </div>
+                            </span>
+                        </div>
+                    );
+                })}
+            </div>
+        </BaseDashboard>
     );
 };

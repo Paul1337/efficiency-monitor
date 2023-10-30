@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../../domain/redux/store';
 import { thunkAccomplishDeal } from '../../../domain/redux/services/accomplishDeal';
 import { DealSelector } from '../DealSelector/DealSelector';
+import { Button, Input } from '@chakra-ui/react';
 
 const Defaults = {
     DealsCount: 1,
@@ -38,8 +39,16 @@ export const FormAccomplishDeal = () => {
     return (
         <div>
             {deal && <DealSelector onSelect={handleDealSelect} value={deal} />}
-            <input type='number' value={dealsCount.toString()} onChange={handleDealsCounterChange} />
-            <button onClick={handleAction}>Accomplish deal</button>
+            <Input
+                m={2}
+                width={'fit-content'}
+                type='number'
+                value={dealsCount.toString()}
+                onChange={handleDealsCounterChange}
+            />
+            <Button m={2} onClick={handleAction}>
+                Accomplish deal
+            </Button>
         </div>
     );
 };

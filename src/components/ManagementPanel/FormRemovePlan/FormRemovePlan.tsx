@@ -6,6 +6,7 @@ import { DealSelector } from '../DealSelector/DealSelector';
 import { EPlanType } from '../../../domain/entities/PlanItem/model';
 import { thunkPlanDailyDeal, thunkPlanLongDeal } from '../../../domain/redux/services/planItem';
 import { thunkRemoveDailyPlan, thunkRemoveLongPlan } from '../../../domain/redux/services/removePlan';
+import { Button, Select } from '@chakra-ui/react';
 
 const PlanTypeTexts: Record<EPlanType, string> = {
     [EPlanType.Daily]: 'Daily',
@@ -43,15 +44,15 @@ export const FormRemovePlan = () => {
 
     return (
         <div>
-            <select onChange={handlePlanTypeChange} defaultValue={planType}>
+            <Select onChange={handlePlanTypeChange} defaultValue={planType}>
                 {Object.entries(PlanTypeTexts).map(([value, text]) => (
                     <option key={value} value={value}>
                         {text}
                     </option>
                 ))}
-            </select>
+            </Select>
             {deal && <DealSelector onSelect={handleDealSelect} value={deal} />}
-            <button onClick={handleAction}>Remove item</button>
+            <Button onClick={handleAction}>Remove item</Button>
         </div>
     );
 };

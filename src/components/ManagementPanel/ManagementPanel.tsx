@@ -5,6 +5,8 @@ import { FormPlanItem } from './FormPlanItem/FormPlanItem';
 import cls from './ManagementPanel.module.css';
 import { FormRemoveDeal } from './FormRemoveDeal/FormRemoveDeal';
 import { FormRemovePlan } from './FormRemovePlan/FormRemovePlan';
+import { Card, Heading } from '@chakra-ui/react';
+import { Select } from 'chakra-react-select';
 
 enum EActions {
     Accomplish = 'Accomplish deal',
@@ -27,30 +29,23 @@ const ActionToFormMap: Record<EActions, FunctionComponent> = {
 export const ManagementPanel = () => {
     const [action, setAction] = useState<EActions>(DefaultAction);
 
-    const handleActionSelect = (e: ChangeEvent<HTMLSelectElement>) => {
-        setAction(e.target.value as EActions);
-    };
+    const handleActionSelect = (value: any) => setAction(value.value);
 
     const Form = ActionToFormMap[action];
 
     return (
-        <div className={cls.ManagementPanel}>
-            <h1>Management</h1>
+        <Card>
+            <Heading>Management</Heading>
             <div className={cls.actionSelectorCont}>
                 <span className={cls.selectAction}>Select action</span>
-                <select
+                <Select
                     className={cls.actionSelector}
                     onChange={handleActionSelect}
-                    defaultValue={action}
-                >
-                    {Object.values(EActions).map((el, ind) => (
-                        <option key={el + ind} value={el}>
-                            {el}
-                        </option>
-                    ))}
-                </select>
+                    defaultValue={{ value: EActions.Accomplish, label: EActions.Accomplish }}
+                    options={Object.values(EActions).map((el) => ({ label: el, value: el }))}
+                />
             </div>
             <div className={cls.ManagementFormCont}>{<Form />}</div>
-        </div>
+        </Card>
     );
 };

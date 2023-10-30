@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../../domain/redux/store';
 import { DealSelector } from '../DealSelector/DealSelector';
 import { thunkRemoveDeal } from '../../../domain/redux/services/removeDeal';
+import { Button } from '@chakra-ui/react';
 
 export const FormRemoveDeal = () => {
     const dispatch = useAppDispatch();
@@ -24,7 +25,7 @@ export const FormRemoveDeal = () => {
     return (
         <div>
             {deal && <DealSelector onSelect={handleDealSelect} value={deal} />}
-            <button onClick={handleAction}>Remove deal</button>
+            <Button onClick={handleAction}>Remove deal</Button>
         </div>
     );
 };
