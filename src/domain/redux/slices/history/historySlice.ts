@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { IHistorySliceScheme } from './types';
 import { IHistoryItem } from '../../../entities/HistoryItem/model';
 import { IDeal } from '../../../entities/Deal/model';
-import { sameDay } from '../../../shared/compareDates';
+import { sameDay } from '../../../shared/dates/compareDates';
 
 const initialState: IHistorySliceScheme = {
     items: [],

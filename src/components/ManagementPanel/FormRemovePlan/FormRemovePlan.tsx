@@ -13,6 +13,15 @@ const PlanTypeTexts: Record<EPlanType, string> = {
     [EPlanType.Long]: 'Long',
 };
 
+const PlanTypeSelectOptions = Object.values(EPlanType)
+    .filter((v) => !isNaN(Number(v)))
+    .map((value) => ({
+        label: PlanTypeTexts[value as EPlanType],
+        value,
+    }));
+
+const PlanTypeDefaultOption = PlanTypeSelectOptions.find((opt) => opt.value === EPlanType.Daily);
+
 export const FormRemovePlan = () => {
     const dispatch = useAppDispatch();
     const deals = useSelector((state: RootState) => state.deals.deals);
@@ -26,9 +35,7 @@ export const FormRemovePlan = () => {
     const handleDealSelect = (deal: IDeal) => setDeal(deal);
 
     const handleAction = () => {
-        console.log('deal', deal);
         if (!deal) return;
-        console.log('removing plan type', planType);
 
         switch (planType) {
             case EPlanType.Daily:
@@ -43,13 +50,13 @@ export const FormRemovePlan = () => {
 
     const handlePlanTypeChange = (e: any) => setPlanType(e.value);
 
-    console.log(Object.values(PlanTypeTexts).map(([value, text]) => ({ label: text, value })));
+    console.log(Object.values(PlanTypeTexts).map((value) => ({ label: value, value })));
     return (
         <div>
             <Select
                 onChange={handlePlanTypeChange}
-                // defaultValue={{ value: planType, label: PlanTypeTexts[planType] }}
-                options={Object.values(PlanTypeTexts).map(([value, text]) => ({ label: text, value }))}
+                defaultValue={PlanTypeDefaultOption}
+                options={PlanTypeSelectOptions}
             />
 
             {deal && <DealSelector onSelect={handleDealSelect} value={deal} />}

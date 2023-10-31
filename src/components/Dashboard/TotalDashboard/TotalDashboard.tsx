@@ -2,7 +2,7 @@ import React from 'react';
 import cls from '../Dashboard.module.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../domain/redux/store';
-import { compareDays } from '../../../domain/shared/compareDates';
+import { compareDays } from '../../../domain/shared/dates/compareDates';
 import classNames from 'classnames';
 import { IPlanItem } from '../../../domain/entities/PlanItem/model';
 import { BaseDashboard } from '../BaseDashboard/BaseDashboard';

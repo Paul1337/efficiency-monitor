@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../domain/redux/store';
-import { sameDay } from '../../../domain/shared/compareDates';
+import { sameDay } from '../../../domain/shared/dates/compareDates';
 import cls from '../Dashboard.module.css';
 import classNames from 'classnames';
 import { BaseDashboard } from '../BaseDashboard/BaseDashboard';
