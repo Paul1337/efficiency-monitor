@@ -10,7 +10,9 @@ export const DailyDashboard = () => {
     const todayDate = new Date();
     const todayHistoryItem = history.find((item) => sameDay(todayDate, item.date));
 
-    const dailyPlans = useSelector((state: RootState) => state.plans.dailyPlans);
+    const dailyPlansAll = useSelector((state: RootState) => state.plans.dailyPlans);
+    const currentWeekday = (new Date().getDay() + 6) % 7;
+    const dailyPlans = dailyPlansAll.filter((plan) => (plan.weekdays ?? []).includes(currentWeekday));
     let otherDone: string[] = [];
     if (todayHistoryItem) {
         otherDone = Object.keys(todayHistoryItem?.done).filter((doneKey) =>
@@ -33,7 +35,7 @@ export const DailyDashboard = () => {
                     return (
                         <div className={cls.item} key={dailyPlan.deal.name + ind}>
                             <span className={cls.itemDescr}>{dailyPlan.deal.name}:</span>
-                            <span className={cls.itemInfo}>
+                            <span>
                                 <span
                                     className={classNames(
                                         cls.itemValue,

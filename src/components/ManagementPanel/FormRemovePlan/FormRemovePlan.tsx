@@ -50,7 +50,6 @@ export const FormRemovePlan = () => {
 
     const handlePlanTypeChange = (e: any) => setPlanType(e.value);
 
-    console.log(Object.values(PlanTypeTexts).map((value) => ({ label: value, value })));
     return (
         <div>
             <Select
