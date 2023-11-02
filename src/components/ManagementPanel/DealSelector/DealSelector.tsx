@@ -7,18 +7,20 @@ import { Select } from 'chakra-react-select';
 interface IDealSelectorProps {
     onSelect: (deal: IDeal) => void;
     value: IDeal;
+    filter?: (deal: IDeal) => boolean;
 }
 
 const mapDealToSelectOption = (deal: IDeal) => ({ label: deal.name, value: deal.name });
 
 export const DealSelector: FC<IDealSelectorProps> = (props) => {
-    const { onSelect, value } = props;
+    const { onSelect, value, filter } = props;
 
     const deals = useSelector((state: RootState) => state.deals.deals);
+    const dealsFiltered = filter ? deals.filter(filter) : deals;
 
     const handleDealSelect = (e: any) => {
         const value = e.value;
-        const newSelectedDeal = deals.find(({ name }) => name === value) as IDeal;
+        const newSelectedDeal = dealsFiltered.find(({ name }) => name === value) as IDeal;
         onSelect(newSelectedDeal);
     };
 
@@ -28,7 +30,7 @@ export const DealSelector: FC<IDealSelectorProps> = (props) => {
                 // styles={{ ma}}
                 onChange={handleDealSelect}
                 value={{ label: value.name, value: value.name }}
-                options={deals.map(mapDealToSelectOption)}
+                options={dealsFiltered.map(mapDealToSelectOption)}
             />
         </div>
     );

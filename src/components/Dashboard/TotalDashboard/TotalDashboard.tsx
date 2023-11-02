@@ -13,7 +13,7 @@ export const TotalDashboard = () => {
 
     const currentDate = new Date();
     const plansInFuture = longPlans.filter((plan) => compareDays(plan.date, currentDate) >= 0);
-    const pastPlans = longPlans.filter((plan) => compareDays(plan.date, currentDate) < 0);
+    // const pastPlans = longPlans.filter((plan) => compareDays(plan.date, currentDate) < 0);
 
     const calculatePlanDoneCount = (plan: IPlanItem): number => {
         return history.reduce((prev, cur) => {

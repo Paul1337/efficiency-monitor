@@ -38,12 +38,15 @@ export const FormPlanItem = () => {
     const [planType, setPlanType] = useState<EPlanType>(DefaultPlanType);
     const [weekdays, setWeekdays] = useState<Array<number>>([0, 1, 2, 3, 4, 5, 6]);
 
+    // const currentDate = new Date();
+    // const dailyPlans = dailyPlansAll.filter((plan) => (plan.weekdays ?? []).includes(currentWeekday));
+    // const plansInFuture = longPlans.filter((plan) => compareDays(plan.date, currentDate) >= 0);
+
     useEffect(() => {
         setDeal(deals[0]);
     }, [deals]);
 
     const handleDealSelect = (deal: IDeal) => setDeal(deal);
-    // const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => setDate(e.target.value);
     const handlePlanCountChange = (e: ChangeEvent<HTMLInputElement>) =>
         setPlanCount(Number(e.target.value));
 
@@ -94,7 +97,7 @@ export const FormPlanItem = () => {
             {planType == EPlanType.Long && (
                 <SingleDatepicker date={planDate} onDateChange={(newDate) => setDate(newDate)} />
             )}
-            {deal && <DealSelector onSelect={handleDealSelect} value={deal} />}
+            {/* {deal && <DealSelector filter={deal => } onSelect={handleDealSelect} value={deal} />} */}
             <Input
                 marginY={2}
                 type='number'
